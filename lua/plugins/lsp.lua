@@ -11,9 +11,15 @@ return {
       ui = {
         border = "rounded",
       },
+      ensure_installed = {
+        -- Install ruff with mason directly
+        "ruff",
+      },
     })
 
+    -- mason-lspconfig setup
     require("mason-lspconfig").setup({
+      -- This list now only contains servers that mason-lspconfig can handle directly
       ensure_installed = {
         "lua_ls",
         "ts_ls",
@@ -29,11 +35,11 @@ return {
     local lspconfig = require("lspconfig")
     local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-    -- Configuración común para servidores
+    -- Common on_attach function
     local on_attach = function(client, bufnr)
       local opts = { buffer = bufnr }
-      
-      -- Keymaps específicos del LSP
+
+      -- LSP Keymaps
       vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
       vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
       vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
@@ -42,16 +48,34 @@ return {
       vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, opts)
       vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, opts)
       vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+
+      -- Add formatting on save for supported servers
+      if client.supports_method("textDocument/formatting") then
+        vim.api.nvim_create_autocmd("BufWritePre", {
+          group = vim.api.nvim_create_augroup("LspFormatting", { clear = true }),
+          buffer = bufnr,
+          callback = function()
+            vim.lsp.buf.format({ bufnr = bufnr })
+          end,
+        })
+      end
     end
 
-    -- Configurar servidores automáticamente
+    -- Automatic server setup using the handler
     require("mason-lspconfig").setup_handlers({
       function(server_name)
+        -- Default setup for servers managed by mason-lspconfig
         lspconfig[server_name].setup({
           on_attach = on_attach,
           capabilities = capabilities,
         })
       end,
+    })
+
+    -- Manual setup for ruff, as it's not handled by the bridge
+    lspconfig.ruff.setup({
+      on_attach = on_attach,
+      capabilities = capabilities,
     })
   end,
 }
