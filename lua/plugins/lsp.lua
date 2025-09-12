@@ -61,16 +61,14 @@ return {
       end
     end
 
-    -- Automatic server setup using the handler
-    require("mason-lspconfig").setup_handlers({
-      function(server_name)
-        -- Default setup for servers managed by mason-lspconfig
-        lspconfig[server_name].setup({
-          on_attach = on_attach,
-          capabilities = capabilities,
-        })
-      end,
-    })
+    -- Automatic server setup
+    local servers = require("mason-lspconfig").get_installed_servers()
+    for _, server_name in ipairs(servers) do
+      lspconfig[server_name].setup({
+        on_attach = on_attach,
+        capabilities = capabilities,
+      })
+    end
 
     -- Manual setup for ruff, as it's not handled by the bridge
     lspconfig.ruff.setup({
