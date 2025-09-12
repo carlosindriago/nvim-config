@@ -13,7 +13,7 @@ return {
       },
       ensure_installed = {
         -- Install ruff with mason directly
-        "ruff",
+        
       },
     })
 
@@ -28,6 +28,7 @@ return {
         "jsonls",
         "pyright",
         "clangd",
+        "ruff",
       },
     })
 
@@ -70,10 +71,8 @@ return {
       })
     end
 
-    -- Manual setup for ruff, as it's not handled by the bridge
-    lspconfig.ruff.setup({
-      on_attach = on_attach,
-      capabilities = capabilities,
-    })
+    
+
+    
   end,
 }

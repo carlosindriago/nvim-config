@@ -13,20 +13,25 @@ autocmd("TextYankPost", {
   end,
 })
 
+-- Restaurar posición del cursor al abrir un buffer
+autocmd("BufReadPost", {
+  pattern = "*",
+  callback = function()
+    local mark = vim.api.nvim_buf_get_mark(0, '"')
+    local line = mark[1]
+    local col = mark[2]
+    if line > 1 and line <= vim.api.nvim_buf_line_count(0) then
+      vim.api.nvim_win_set_cursor(0, {line, col})
+    end
+  end,
+  desc = "Restaurar posición del cursor al abrir un archivo",
+})
+
 -- Remover espacios en blanco al guardar
 autocmd("BufWritePre", {
   pattern = "*",
-  command = "%s/\\s\\+$//e",
-})
-
--- Restaurar posición del cursor
-autocmd("BufReadPost", {
-  callback = function()
-    local last_pos = vim.fn.line("'\"")
-    if last_pos > 0 and last_pos <= vim.fn.line("$") then
-      vim.api.nvim_win_set_cursor(0, {last_pos, 0})
-    end
-  end,
+  command = [[%s/\s\+$//e]],
+  desc = "Remover espacios en blanco al final de la línea al guardar",
 })
 
 -- Auto cerrar NvimTree si es la última ventana

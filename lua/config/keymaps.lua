@@ -66,6 +66,9 @@ keymap.set("n", "<C-S-f>", "<cmd>Telescope live_grep<cr>", opts)
 -- Buscar en archivo actual con Ctrl+F
 keymap.set("n", "<C-f>", "/", opts)
 
+-- Buscar en buffers abiertos
+keymap.set("n", "<leader>b", "<cmd>Telescope buffers<cr>", { desc = "[B]uscar en buffers abiertos" })
+
 -- ============================== TERMINAL ==============================
 
 -- Toggle terminal con Ctrl+` (como VSCode)
@@ -127,3 +130,25 @@ keymap.set("v", "p", '"_dP', opts)
 -- Mantener búsqueda centrada
 keymap.set("n", "n", "nzzzv", opts)
 keymap.set("n", "N", "Nzzzv", opts)
+
+-- ============================== AI / GEMINI ==============================
+
+-- El `desc` es lo que `which-key` usa para mostrar el menú.
+-- Primero, registramos el grupo "a" para "AI".
+keymap.set("n", "<leader>a", "", { noremap = true, silent = true, nowait = true, desc = "[A]I / Gemini" })
+
+-- Atajos en modo Normal
+keymap.set("n", "<leader>ac", function()
+  local input = vim.fn.input("Gemini Chat: ")
+  if input ~= "" then
+    vim.cmd("GeminiChat " .. input)
+  end
+end, { desc = "[C]hat con Gemini" })
+keymap.set("n", "<leader>ae", "<cmd>GeminiCodeExplain<cr>", { desc = "[E]xplicar Código" })
+keymap.set("n", "<leader>ar", "<cmd>GeminiCodeReview<cr>", { desc = "[R]evisar Código" })
+keymap.set("n", "<leader>at", "<cmd>GeminiTask<cr>", { desc = "[T]area" })
+keymap.set("n", "<leader>au", "<cmd>GeminiUnitTest<cr>", { desc = "Generar Test [U]nitario" })
+
+-- Atajos en modo Visual (para cuando seleccionas texto)
+keymap.set("v", "<leader>ae", ":GeminiCodeExplain<cr>", { desc = "[E]xplicar Código Seleccionado" })
+keymap.set("v", "<leader>ar", ":GeminiCodeReview<cr>", { desc = "[R]evisar Código Seleccionado" })

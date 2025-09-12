@@ -49,7 +49,7 @@ opt.foldmethod = "expr"
 opt.foldexpr = "nvim_treesitter#foldexpr()"
 opt.foldlevel = 99
 opt.foldlevelstart = 99
-opt.foldenable = true
+opt.foldenable = false
 
 -- Otros
 opt.conceallevel = 0                  -- No ocultar caracteres especiales
