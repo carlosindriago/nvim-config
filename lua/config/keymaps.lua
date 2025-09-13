@@ -131,6 +131,17 @@ keymap.set("v", "p", '"_dP', opts)
 keymap.set("n", "n", "nzzzv", opts)
 keymap.set("n", "N", "Nzzzv", opts)
 
+-- ============================== DEBUGGING ==============================
+
+keymap.set("n", "<leader>d", "", { noremap = true, silent = true, nowait = true, desc = "[D]ebug" })
+keymap.set("n", "<leader>db", function() require("dap").toggle_breakpoint() end, { desc = "Toggle [B]reakpoint" })
+keymap.set("n", "<leader>dc", function() require("dap").continue() end, { desc = "[C]ontinue" })
+keymap.set("n", "<leader>di", function() require("dap").step_into() end, { desc = "Step [I]nto" })
+keymap.set("n", "<leader>do", function() require("dap").step_out() end, { desc = "Step [O]ut" })
+keymap.set("n", "<leader>dO", function() require("dap").step_over() end, { desc = "Step [O]ver" })
+keymap.set("n", "<leader>dr", function() require("dap").repl.toggle() end, { desc = "Toggle [R]EPL" })
+keymap.set("n", "<leader>dt", function() require("dap").terminate() end, { desc = "[T]erminate" })
+
 -- ============================== AI / GEMINI ==============================
 
 -- El `desc` es lo que `which-key` usa para mostrar el menú.

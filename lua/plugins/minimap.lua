@@ -10,7 +10,7 @@ return {
     })
 
     -- Creamos el atajo manualmente
-    vim.keymap.set('n', '<leader>m', '<Cmd>CodewindowToggle<CR>', {
+    vim.keymap.set('n', '<leader>m', require('codewindow').toggle_minimap, {
       noremap = true,
       silent = true,
       desc = 'Minimapa: Mostrar / Ocultar'
