@@ -1,6 +1,7 @@
 -- lua/plugins/gemini.lua
 return {
   "kiddos/gemini.nvim",
+  enabled = false,
   -- Habilitamos la carga perezosa con los comandos que descubrimos
   cmd = {
     "GeminiApply",

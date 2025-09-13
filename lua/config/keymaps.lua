@@ -142,24 +142,11 @@ keymap.set("n", "<leader>dO", function() require("dap").step_over() end, { desc 
 keymap.set("n", "<leader>dr", function() require("dap").repl.toggle() end, { desc = "Toggle [R]EPL" })
 keymap.set("n", "<leader>dt", function() require("dap").terminate() end, { desc = "[T]erminate" })
 
--- ============================== AI / GEMINI ==============================
+-- ============================== AI / AVANTE ==============================
 
--- El `desc` es lo que `which-key` usa para mostrar el menú.
--- Primero, registramos el grupo "a" para "AI".
-keymap.set("n", "<leader>a", "", { noremap = true, silent = true, nowait = true, desc = "[A]I / Gemini" })
-
--- Atajos en modo Normal
-keymap.set("n", "<leader>ac", function()
-  local input = vim.fn.input("Gemini Chat: ")
-  if input ~= "" then
-    vim.cmd("GeminiChat " .. input)
-  end
-end, { desc = "[C]hat con Gemini" })
-keymap.set("n", "<leader>ae", "<cmd>GeminiCodeExplain<cr>", { desc = "[E]xplicar Código" })
-keymap.set("n", "<leader>ar", "<cmd>GeminiCodeReview<cr>", { desc = "[R]evisar Código" })
-keymap.set("n", "<leader>at", "<cmd>GeminiTask<cr>", { desc = "[T]area" })
-keymap.set("n", "<leader>au", "<cmd>GeminiUnitTest<cr>", { desc = "Generar Test [U]nitario" })
+keymap.set("n", "<leader>a", "<cmd>Avante<cr>", { desc = "[A]vante AI" })
+keymap.set("n", "<leader>ac", "<cmd>AvanteChat<cr>", { desc = "[C]hat con Avante" })
+keymap.set("n", "<leader>aa", "<cmd>AvanteAsk<cr>", { desc = "[A]sk Avante" })
 
 -- Atajos en modo Visual (para cuando seleccionas texto)
-keymap.set("v", "<leader>ae", ":GeminiCodeExplain<cr>", { desc = "[E]xplicar Código Seleccionado" })
-keymap.set("v", "<leader>ar", ":GeminiCodeReview<cr>", { desc = "[R]evisar Código Seleccionado" })
+keymap.set("v", "<leader>a", ":Avante<cr>", { desc = "Avante [A]I" })
